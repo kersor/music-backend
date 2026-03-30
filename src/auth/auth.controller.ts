@@ -27,6 +27,7 @@ export class AuthController {
       httpOnly: true,
       secure: false,
       path: '/api/auth/refresh',
+      expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     });
 
     return {
@@ -46,6 +47,7 @@ export class AuthController {
       httpOnly: true,
       secure: false,
       path: '/api/auth/refresh',
+      expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     });
 
     return {
@@ -68,6 +70,7 @@ export class AuthController {
       httpOnly: true,
       secure: false,
       path: '/api/auth/refresh',
+      expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     });
 
     return {

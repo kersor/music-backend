@@ -9,6 +9,7 @@ import {
 } from '@nestjs/serve-static';
 import { join } from 'path';
 import { MusicModule } from './music/music.module';
+import { CollectionModule } from './collection/collection.module';
 
 const serveStaticOptions: ServeStaticModuleOptions = {
   rootPath: join(process.cwd(), 'uploads'),
@@ -23,6 +24,7 @@ const serveStaticOptions: ServeStaticModuleOptions = {
     AuthModule,
     UploadModule,
     MusicModule,
+    CollectionModule,
   ],
 })
 export class AppModule {}
