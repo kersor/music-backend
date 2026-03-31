@@ -11,11 +11,23 @@ import { AuthService } from './auth.service';
 import { DtoLogin, DtoRegister, ResponceAuth } from './dto/dto';
 import { Request, Response } from 'express';
 import { AuthGuard } from './auth.guard';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
+@ApiTags('Авторизация')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOperation({ summary: 'Регистрация пользователя' })
+  @ApiBody({ type: DtoRegister })
+  @ApiOkResponse({ type: ResponceAuth, description: 'Пользователь зарегистрирован' })
   @Post('/register')
   async register(
     @Body() dto: DtoRegister,
@@ -36,6 +48,9 @@ export class AuthController {
     };
   }
 
+  @ApiOperation({ summary: 'Вход пользователя' })
+  @ApiBody({ type: DtoLogin })
+  @ApiOkResponse({ type: ResponceAuth, description: 'Пользователь авторизован' })
   @Post('/login')
   async login(
     @Body() dto: DtoLogin,
@@ -56,6 +71,9 @@ export class AuthController {
     };
   }
 
+  @ApiOperation({ summary: 'Обновление access-токена по refresh-токену' })
+  @ApiOkResponse({ description: 'Новый access-токен выдан' })
+  @ApiUnauthorizedResponse({ description: 'Недействительный refresh-токен' })
   @Post('/refresh')
   async refresh(
     @Req() req: Request,
@@ -79,6 +97,10 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Получить текущего пользователя' })
+  @ApiOkResponse({ description: 'Данные текущего пользователя' })
+  @ApiUnauthorizedResponse({ description: 'Пользователь не авторизован' })
   @Get('/me')
   async me(@Req() req: Request) {
     const cookies = req.cookies as Record<string, string>;
