@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { PrismaService } from 'src/prisma.service';
 import { DtoUpdateCollection } from './dto/dto';
@@ -58,5 +58,42 @@ export class CollectionService {
     });
 
     return updateCollection;
+  }
+
+  async addMusicInCollection(collectionId: string, musicId: string) {
+    const collection = await this.prisma.collection.findFirst({
+      where: {
+        id: collectionId,
+      },
+    });
+
+    if (!collection) {
+      throw new HttpException('Не найдена коллекция', HttpStatus.BAD_REQUEST);
+    }
+
+    const music = await this.prisma.music.findFirst({
+      where: {
+        id: musicId,
+      },
+    });
+
+    if (!music) {
+      throw new HttpException('Не найдена музыка', HttpStatus.BAD_REQUEST);
+    }
+
+    return this.prisma.musicCollection.create({
+      data: {
+        collectionId: collectionId,
+        musicId: musicId,
+      },
+      include: {
+        music: {
+          include: {
+            author: true,
+            collections: true,
+          },
+        },
+      },
+    });
   }
 }

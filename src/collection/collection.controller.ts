@@ -15,6 +15,7 @@ import { DtoUpdateCollection } from './dto/dto';
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiBadRequestResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
@@ -73,5 +74,20 @@ export class CollectionController {
     @Body() dto: DtoUpdateCollection,
   ) {
     return this.collectionService.updateCollection(id, dto);
+  }
+
+  @Post(':collection_id/add-music/:music_id')
+  @ApiOperation({ summary: 'Добавить музыку в коллекцию' })
+  @ApiParam({ name: 'collection_id', description: 'ID коллекции' })
+  @ApiParam({ name: 'music_id', description: 'ID музыки' })
+  @ApiOkResponse({ description: 'Музыка добавлена в коллекцию' })
+  @ApiBadRequestResponse({
+    description: 'Коллекция или музыка не найдены',
+  })
+  async addMusicInCollection(
+    @Param('collection_id') collection_id: string,
+    @Param('music_id') music_id: string,
+  ) {
+    return this.collectionService.addMusicInCollection(collection_id, music_id);
   }
 }
