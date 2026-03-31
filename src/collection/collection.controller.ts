@@ -90,4 +90,12 @@ export class CollectionController {
   ) {
     return this.collectionService.addMusicInCollection(collection_id, music_id);
   }
+
+  @Get(':collection_id/musics')
+  @ApiOperation({ summary: 'Получить всю музыку в коллекции' })
+  @ApiParam({ name: 'collection_id', description: 'ID коллекции' })
+  @ApiOkResponse({ description: 'Список музыки в коллекции' })
+  async getAllMusicInCollection(@Param('collection_id') collection_id: string) {
+    return this.collectionService.getAllMusicInCollection(collection_id);
+  }
 }

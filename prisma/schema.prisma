@@ -34,7 +34,7 @@ model Music {
 
   authorId String
   author User @relation(fields: [authorId], references: [id])
-  collections Collection[] @relation("MusicInCollections")
+  collections MusicCollection[]
 }
 
 model Collection {
@@ -45,5 +45,18 @@ model Collection {
   authorId String
   author User @relation(fields: [authorId], references: [id])
 
-  musics Music[] @relation("MusicInCollections")
+  musics      MusicCollection[]
+}
+
+model MusicCollection {
+  musicId      String
+  collectionId String
+  addedAt      DateTime   @default(now())
+
+  music        Music      @relation(fields: [musicId], references: [id], onDelete: Cascade)
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+
+  @@id([musicId, collectionId])
+  @@index([collectionId])
+  @@index([musicId])
 }

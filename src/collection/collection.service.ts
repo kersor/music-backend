@@ -60,6 +60,23 @@ export class CollectionService {
     return updateCollection;
   }
 
+  async getAllMusicInCollection(collection_id: string) {
+    const musics = await this.prisma.musicCollection.findMany({
+      where: {
+        collectionId: collection_id,
+      },
+      include: {
+        music: {
+          include: {
+            author: true,
+          },
+        },
+      },
+    });
+
+    return musics;
+  }
+
   async addMusicInCollection(collectionId: string, musicId: string) {
     const collection = await this.prisma.collection.findFirst({
       where: {
