@@ -1,7 +1,10 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class DtoUpdateCollection {
-  @ApiPropertyOptional({ example: 'Любимые треки', description: 'Название коллекции' })
+  @ApiPropertyOptional({
+    example: 'Любимые треки',
+    description: 'Название коллекции',
+  })
   name?: string;
 
   @ApiPropertyOptional({

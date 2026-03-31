@@ -1,7 +1,13 @@
 import { Body, Controller, Param, Patch } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from 'generated/prisma/client';
-import { ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('Пользователи')
 @Controller('user')
@@ -18,8 +24,16 @@ export class UserController {
         name: { type: 'string', description: 'Имя пользователя' },
         email: { type: 'string', description: 'Email пользователя' },
         password: { type: 'string', description: 'Пароль пользователя' },
-        createdAt: { type: 'string', format: 'date-time', description: 'Дата создания' },
-        updatedAt: { type: 'string', format: 'date-time', description: 'Дата обновления' },
+        createdAt: {
+          type: 'string',
+          format: 'date-time',
+          description: 'Дата создания',
+        },
+        updatedAt: {
+          type: 'string',
+          format: 'date-time',
+          description: 'Дата обновления',
+        },
       },
     },
   })

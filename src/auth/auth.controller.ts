@@ -27,7 +27,10 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Регистрация пользователя' })
   @ApiBody({ type: DtoRegister })
-  @ApiOkResponse({ type: ResponceAuth, description: 'Пользователь зарегистрирован' })
+  @ApiOkResponse({
+    type: ResponceAuth,
+    description: 'Пользователь зарегистрирован',
+  })
   @Post('/register')
   async register(
     @Body() dto: DtoRegister,
@@ -50,7 +53,10 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Вход пользователя' })
   @ApiBody({ type: DtoLogin })
-  @ApiOkResponse({ type: ResponceAuth, description: 'Пользователь авторизован' })
+  @ApiOkResponse({
+    type: ResponceAuth,
+    description: 'Пользователь авторизован',
+  })
   @Post('/login')
   async login(
     @Body() dto: DtoLogin,

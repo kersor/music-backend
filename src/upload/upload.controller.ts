@@ -30,7 +30,11 @@ export class UploadController {
       type: 'object',
       required: ['file'],
       properties: {
-        file: { type: 'string', format: 'binary', description: 'Файл для загрузки' },
+        file: {
+          type: 'string',
+          format: 'binary',
+          description: 'Файл для загрузки',
+        },
       },
     },
   })
